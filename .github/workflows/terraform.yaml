@@ -1,0 +1,77 @@
+---
+name: Terraform Automation
+'on':
+  workflow_call:
+    inputs:
+      repo_name:
+        type: string
+      repo_visibility:
+        type: string
+        required: true
+      repo_description:
+        type: string
+      backend_dir:
+        type: string
+        required: true
+      frontend_dir:
+        type: string
+        required: true
+      github_token:
+        type: string
+        required: true
+      github_owner:
+        type: string
+        required: true
+env:
+  TF_VAR_repo_name: ${{ github.event.inputs.repo_name }}
+  TF_VAR_repo_visibility: ${{ github.event.inputs.repo_visibility }}
+  TF_VAR_repo_description: ${{ github.event.inputs.repo_description }}
+  TF_VAR_backend_dir: ${{ github.event.inputs.backend_dir }}
+  TF_VAR_frontend_dir: ${{ github.event.inputs.frontend_dir }}
+  TF_VAR_github_token: ${{ github.event.inputs.github_token }}
+  TF_VAR_github_owner: ${{ github.event.inputs.github_owner }}
+jobs:
+  terraform_init_and_plan:
+    name: Check Configuration 🔍
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Hide sensitive inputs 🔐
+        uses: levibostian/action-hide-sensitive-inputs@1.0.0
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.6.3
+      - name: Terraform Init
+        working-directory: terraform
+        run: terraform init
+      - name: Terraform Plan
+        id: plan
+        working-directory: terraform
+        run: terraform plan -input=false
+  terraform_deploy:
+    name: Deploy by Terraform 🚀
+    needs: terraform_init_and_plan
+    runs-on: ubuntu-20.04
+    environment: production
+    if: ${{ success() }}
+    steps:
+      - name: Hide sensitive inputs 🔐
+        uses: levibostian/action-hide-sensitive-inputs@1.0.0
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.6.3
+      - name: Terraform Init
+        working-directory: terraform
+        run: terraform init
+      - name: Terraform Plan
+        id: plan
+        working-directory: terraform
+        run: terraform plan -out=tfplan -input=false
+      - name: Terraform Apply
+        working-directory: terraform
+        run: terraform apply -auto-approve
