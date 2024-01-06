@@ -1,5 +1,13 @@
 {
-  "rewrites": [
-      { "source": "/(.*)", "destination": "/wsgi" }
-  ]
+  "runtime": "python3.11",
+  "builds": [
+    {
+      "src": "requirements.txt",
+      "use": "@vercel/python"
+    }
+  ],
+  "scripts": {
+    "vercel-build": "pip install -r requirements.txt",
+    "vercel-python-entrypoint": "python wsgi.py"
+  }
 }
