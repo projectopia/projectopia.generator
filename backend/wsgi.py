@@ -1,6 +1,6 @@
 import multiprocessing
 import gunicorn.app.base
-from __init__ import app as handler_app
+from main import app as handler_app
 
 def number_of_workers():
     _ = multiprocessing.cpu_count()
