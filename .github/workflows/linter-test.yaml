@@ -18,8 +18,6 @@ jobs:
         env:
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_JSCPD: false
-          VALIDATE_TERRAFORM_TERRASCAN: false
-          VALIDATE_TERRAFORM_FMT: false
-          VALIDATE_YAML: false
-          VALIDATE_XML: false
+          VALIDATE_YAML: true
+          VALIDATE_XML: true
           GITHUB_TOKEN: ${{ github.event.inputs.github_token }}
