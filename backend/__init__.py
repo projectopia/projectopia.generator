@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_restx import Api
 from werkzeug.middleware.proxy_fix import ProxyFix
-from backend.home import home_template
-from backend.modules.api.v1 import ns as api_v1_ns
+from home import home_template
+from modules.api.v1 import ns as api_v1_ns
 
 app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app)
