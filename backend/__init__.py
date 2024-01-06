@@ -14,7 +14,7 @@ def home():
 api = Api(
     app,
     version='1.0',
-    title='Projectopia API',
+    title='Projectopia Generator API',
     description='WARNING: DO NOT USE THIS IF YOU ARE NOT PROJECTOPIA INTERNAL DEVELOPER',
     doc='/docs',
 ) 
