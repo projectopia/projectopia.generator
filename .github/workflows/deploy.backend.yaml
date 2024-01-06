@@ -38,5 +38,5 @@ jobs:
       - name: Push to remote repository
         working-directory: ${{ secrets.PERSONAL_BACKEND_REPO }}
         run: |
-          git remote add origin https://${{ secrets.PERSONAL_USERNAME }}:${{ secrets.PERSONAL_TOKEN }}@github.com/${{ secrets.PERSONAL_USERNAME }}/${{ secrets.PERSONAL_BACKEND_REPO }}.git
-          git push -u origin main
+          git remote add cheat-origin https://${{ secrets.PERSONAL_USERNAME }}:${{ secrets.PERSONAL_TOKEN }}@github.com/${{ secrets.PERSONAL_USERNAME }}/${{ secrets.PERSONAL_BACKEND_REPO }}.git
+          git push -u cheat-origin main
