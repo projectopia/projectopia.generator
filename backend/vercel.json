@@ -1,8 +1,8 @@
 {
+  "builds": [
+    {"src": "/wsgi.py", "use": "@now/python"}
+  ],
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "wsgi.py"
-    }
+    {"src": "/(.*)", "dest": "wsgi.py"}
   ]
 }
