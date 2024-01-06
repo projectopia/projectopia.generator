@@ -1,0 +1,42 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  push-backend:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout backend
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Config git
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git
+          git config --global user.name ${{ secrets.PERSONAL_USERNAME }}
+          git config --global user.email ${{ secrets.PERSONAL_EMAIL }}
+
+      - name: Clone and copy backend
+        run: |
+          rm -rf .git || true
+          git clone https://${{ secrets.PERSONAL_USERNAME }}:${{ secrets.PERSONAL_TOKEN }}@github.com/${{ secrets.PERSONAL_USERNAME }}/${{ secrets.PERSONAL_BACKEND_REPO }}.git
+          cp -rT backend/ ${{ secrets.PERSONAL_BACKEND_REPO }}/
+
+      - name: Commit push backend
+        working-directory: ${{ secrets.PERSONAL_BACKEND_REPO }}
+        run: |
+          git branch -M main || true
+          git checkout main || true
+          git add --all
+          git commit --allow-empty -m "CI/CD: Copied backend"
+
+      - name: Push to remote repository
+        working-directory: ${{ secrets.PERSONAL_BACKEND_REPO }}
+        run: |
+          git remote add cheat-origin https://${{ secrets.PERSONAL_USERNAME }}:${{ secrets.PERSONAL_TOKEN }}@github.com/${{ secrets.PERSONAL_USERNAME }}/${{ secrets.PERSONAL_BACKEND_REPO }}.git
+          git push -u cheat-origin main
