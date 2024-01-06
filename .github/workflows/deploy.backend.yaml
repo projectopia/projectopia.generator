@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout backend
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
-          path: backend
+          fetch-depth: 0
 
       - name: Config git
         run: |
@@ -25,7 +25,7 @@ jobs:
         run: |
           rm -rf .git || true
           git clone https://${{ secrets.PERSONAL_USERNAME }}:${{ secrets.PERSONAL_TOKEN }}@github.com/${{ secrets.PERSONAL_USERNAME }}/${{ secrets.PERSONAL_BACKEND_REPO }}.git
-          cp -rT backend ${{ secrets.PERSONAL_BACKEND_REPO }}/
+          cp -rT backend/ ${{ secrets.PERSONAL_BACKEND_REPO }}/
 
       - name: Commit push backend
         working-directory: ${{ secrets.PERSONAL_BACKEND_REPO }}
