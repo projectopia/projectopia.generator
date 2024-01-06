@@ -5,7 +5,6 @@ setup(
     packages=find_packages(exclude=["backend_tests"]),
     install_requires=[
         "Flask==3.0.0",
-        "multiprocessing",
         "gunicorn", # for deployment
         "flask-restx", # Modern version of flask-restful
     ],
