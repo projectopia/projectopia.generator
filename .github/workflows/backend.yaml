@@ -33,7 +33,7 @@ jobs:
           git branch -M main || true
           git checkout main || true
           git add --all
-          git commit -m "CI/CD: Copied backend"
+          git commit --allow-empty -m "CI/CD: Copied backend"
 
       - name: Push to remote repository
         working-directory: ${{ secrets.PERSONAL_BACKEND_REPO }}
