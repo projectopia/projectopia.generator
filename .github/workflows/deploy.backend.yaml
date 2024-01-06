@@ -30,6 +30,13 @@ jobs:
       - name: Commit push backend
         working-directory: ${{ secrets.PERSONAL_BACKEND_REPO }}
         run: |
+          git branch -M main || true
+          git checkout main || true
           git add --all
           git commit -m "CI/CD: Copied backend"
+
+      - name: Push to remote repository
+        working-directory: ${{ secrets.PERSONAL_BACKEND_REPO }}
+        run: |
+          git remote add origin https://${{ secrets.PERSONAL_USERNAME }}:${{ secrets.PERSONAL_TOKEN }}@github.com/${{ secrets.PERSONAL_USERNAME }}/${{ secrets.PERSONAL_BACKEND_REPO }}.git
           git push -u origin main
