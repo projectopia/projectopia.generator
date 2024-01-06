@@ -21,12 +21,15 @@ jobs:
           git config --global user.name ${{ secrets.PERSONAL_USERNAME }}
           git config --global user.email ${{ secrets.PERSONAL_EMAIL }}
 
-      - name: Push Backend
+      - name: Clone and copy backend
         run: |
           rm -rf .git || true
           git clone https://${{ secrets.PERSONAL_USERNAME }}:${{ secrets.PERSONAL_TOKEN }}@github.com/${{ secrets.PERSONAL_USERNAME }}/${{ secrets.PERSONAL_BACKEND_REPO }}.git
           cp -rT backend ${{ secrets.PERSONAL_BACKEND_REPO }}/
-          cd ${{ secrets.PERSONAL_BACKEND_REPO }}
+
+      - name: Commit push backend
+        working-directory: ${{ secrets.PERSONAL_BACKEND_REPO }}
+        run: |
           git add --all
-          git commit -m "Update backend folder"
+          git commit -m "CI/CD: Copied backend"
           git push -u origin main
