@@ -225,30 +225,3 @@ class PersonalRepository(BaseRepository):
         else:
             self._logger.error(
                 f"Failed to delete GitHub Pages. Error: {response.text}")
-
-
-if __name__ == "__main__":
-    token = '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'
-    name = "Test-Projectopia"
-    rp = PersonalRepository(token, name)
-    rp.create()
-    rp.add_collaborator('tntuann0910')
-    rp.add_branch('develop', 'main')
-    rp.set_branch_protection_rules('main',
-                                   {
-                                       "strict": True,
-                                       "contexts": ["continuous-integration/travis-ci"]
-                                   },
-                                   True,
-                                   {
-                                       "dismiss_stale_reviews": True,
-                                       "require_code_owner_reviews": True,
-                                       "required_approving_review_count": 2,
-                                       "require_last_push_approval": True,
-                                   },
-                                   None)
-    # rp.add_branch('test', 'main')
-    # rp.delete_github_pages()
-    rp.configure_github_pages('/')
-    # rp.update_github_pages('/')
-    # rp.delete()
