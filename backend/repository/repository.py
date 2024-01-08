@@ -10,9 +10,9 @@ class BaseRepository:
                  version: str,
                  name: str,
                  description: str = None,
-                 homepage: str = "https://github.com",
+                 homepage: str = "",
                  private: bool = False,
-                 is_template: bool = True,
+                 is_template: bool = False,
                  auto_init: bool = True):
         # Write a docstring for this class
         """Base class for creating a repository
